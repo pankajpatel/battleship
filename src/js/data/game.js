@@ -12,7 +12,7 @@ class Game {
   }
 
   init(){
-    this.data.players.forEach( (player, i) => {
+    this.data.players.forEach( (player, playerIndex) => {
       //random
       this.randomizeWeapons(player);
 
@@ -20,11 +20,11 @@ class Game {
       //weapons array
       if( player.weaponsIn == null ){
         let w = [];
-        player.weapons.map( (weapon, i) => {
-          w = w.concat(weapon.cells.map(cell => {
-            cell.weapon = i;
-            return cell;
-          }));
+        player.weapons.forEach( (weapon, weaponIndex) => {
+          weapon.cells.forEach(cell => {
+            cell.weapon = weaponIndex;
+          });
+          w = w.concat(weapon.cells)
         })
         player.weaponsIn = w
       }
@@ -93,7 +93,7 @@ class Game {
       weapon.cells = weapon.cells.map( i => {
         if( dir == 'h' ){ //increase in c
           return {r: startX, c: startY++}
-        } else { //increase in h
+        } else { //increase in r
           return {r: startX++, c: startY}
         } //in future diagonal can also be done
       })
@@ -116,30 +116,35 @@ class Game {
   getState(){
     return this.data;
   }
-  getPlayer( pID ){
-    let playerId = null;
+  getPlayer( playerId ){
+    let playerIndex = null;
     this.data.players.map( (player, i) => {
-      if( player.id == pID ){
-        playerId = i;
+      if( player.id == playerId ){
+        playerIndex = i;
       }
     })
-    return playerId
+    return playerIndex
   }
   markCell( data, callback ){
     let index = this.getPlayer(data.player);
-    console.log('called markCell', index, data)
     let cell = this.data.players[index].arena[data.cell.r].cells[data.cell.c]
     cell.value = 1;
     this
-      .pushLog(index, Object.assign({}, data.cell), {message: 'clicked'} )
-      .netxTurn(callback);
+      .pushLog(this.data.turn, Object.assign({}, data.cell), {
+          message: [
+              cell.isWeaponized ? 'hit' : 'miss',
+              this.isWeaponDestroyed(index, cell.weapon) ? 'ship sinked' : ''
+            ]
+        })
+      .checkForWinner()
+      .nextTurn(callback);
   }
   pushLog(player, cell, info){
     console.log(player, cell, info)
     this.data.logs.push({player, cell, info});
     return this;
   }
-  netxTurn(callback){
+  nextTurn(callback){
     this.data.turn++;
 
     if( this.data.turn > 1 ){
@@ -151,21 +156,63 @@ class Game {
     // }
     return this;
   }
-  autoClick(){
+  autoClick(playerIndex){
     let location = {r: null, c: null};
     location.r = this.randomValue(this.rows);
     location.c = this.randomValue(this.cols);
+    if( this.data.players[playerIndex].arena[location.r].cells[location.c].value == 1){
+      location = this.autoClick(playerIndex)
+    }
     return location;
+  }
+
+  isWeaponDestroyed(playerIndex, weaponIndex){
+    console.log('player: '+playerIndex, 'weapon: '+weaponIndex)
+    if(weaponIndex != ''){
+      let weapon = this.data.players[playerIndex].weapons[weaponIndex].cells;
+      let totalPossibleDamage = weapon.length;
+      let damage = 0;
+      weapon.map( (cell, i) => {
+        this.data.players[playerIndex].arena[cell.r].cells[cell.c].value == 1 ? damage++ : null;
+      })
+      if( damage < totalPossibleDamage ){
+        return false;
+      } else {
+        this.data.players[playerIndex].weapons[weaponIndex].status = 0;
+        return true;
+      }
+    }
+    return false;
+  }
+  checkForWinner(){
+    let winnerIndex = null;
+    let powers = [];
+    this.data.players.map((player, playerIndex) => {
+      let playerPower = player.weapons.length;
+      player.weapons.map( weapon => {
+        if( !weapon.status ){
+          playerPower--;
+        }
+      })
+      powers.push({index: playerIndex, power: playerPower});
+    })
+
+    if(powers[0] == 0){
+      winnerIndex = 1;
+    } else if(powers[1] == 0){
+      winnerIndex = 0;
+    }
+    this.data.winner = winnerIndex;
+    return this;
   }
   makeComputerMove(callback){
     //pretend like computer is thinking
-    console.log('bot is moving')
+    // console.log('bot is moving')
     setTimeout(()=>{
-      let cellToClick = this.autoClick();
-      console.log(cellToClick);
+      let cellToClick = this.autoClick(0);
       this.markCell({ player: this.data.players[0].id, cell: cellToClick }, callback)
 
-    },1000)
+    },100)
 
     // this.netxTurn(callback);
 

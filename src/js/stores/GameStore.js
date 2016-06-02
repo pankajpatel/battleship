@@ -10,7 +10,6 @@ let _game = new Game();
 const GameStore = Object.assign({}, BaseStore, {
   // public methods used by Controller-View to operate on data
   getAll() {
-    console.log(_game)
     return {
       game: _game.getState()
     };

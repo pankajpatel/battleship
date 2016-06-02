@@ -22,7 +22,6 @@ export default React.createClass({
   },
 
   render() {
-    console.log(this.props)
     return (
       <div className={this.props.turn ? 'arena' : 'arena turn'}>
         <p>{this.props.player.name}</p>
@@ -40,9 +39,13 @@ export default React.createClass({
                       }
                       if(cell.value === 1){
                         classNames.push('done');
-                        // classNames.push('miss');
+                        if(cell.isWeaponized){
+                          classNames.push('hit');
+                        } else {
+                          classNames.push('miss');
+                        }
                       }
-                      if( this.props.turn ){
+                      if( this.props.turn || cell.value === 1 ){
                         return (
                             <li
                               className={classNames.join(' ')}
