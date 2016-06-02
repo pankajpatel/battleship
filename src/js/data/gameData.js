@@ -24,12 +24,12 @@ var game = {
       weaponsIn: null,
       weapons: [
         {
-          type: 'battleship',
-          cells: [{r: 0, c: 0},{r: 0, c: 1},{r: 0, c: 2},{r: 0, c: 3},{r: 0, c: 4}],
-          status: 1 //active
-        }, {
           type: 'destroyer',
           cells: [{r: 1, c: 0},{r: 1, c: 1},{r: 1, c: 2},{r: 1, c: 3}],
+          status: 1 //active
+        }, {
+          type: 'battleship',
+          cells: [{r: 0, c: 0},{r: 0, c: 1},{r: 0, c: 2},{r: 0, c: 3},{r: 0, c: 4}],
           status: 1 //active
         }, {
           type: 'destroyer',
@@ -44,12 +44,12 @@ var game = {
       arena: [], //will be filled by constructor
       weapons: [
         {
-          type: 'battleship',
-          cells: [{r: 0, c: 0},{r: 0, c: 1},{r: 0, c: 2},{r: 0, c: 3},{r: 0, c: 4}],
-          status: 1 //active
-        }, {
           type: 'destroyer',
           cells: [{r: 1, c: 0},{r: 1, c: 1},{r: 1, c: 2},{r: 1, c: 3}],
+          status: 1 //active
+        }, {
+          type: 'battleship',
+          cells: [{r: 0, c: 0},{r: 0, c: 1},{r: 0, c: 2},{r: 0, c: 3},{r: 0, c: 4}],
           status: 1 //active
         }, {
           type: 'destroyer',

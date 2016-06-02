@@ -90,6 +90,22 @@ h1 {
     opacity: 1;
   }
 }
+
+.winner{
+  .row{
+    .cell{
+      border: 1px solid green;
+    }
+  }
+}
+.lost{
+  .row{
+    .cell{
+      border: 1px solid maroon;
+    }
+  }
+}
+
 .row{
   margin: 0;
   padding: 0;

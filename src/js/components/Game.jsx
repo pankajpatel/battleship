@@ -35,8 +35,8 @@ export default React.createClass({
         <p></p>
         <div className="two-columns clearfix">
           <div className="column">
+            <h2>{this.props.data.winner != null ? this.props.data.players[this.props.data.winner].name + ' won!' : ''}</h2>
             <p><strong>Turn: </strong><span>{this.props.data.players[this.props.data.turn].name}</span></p>
-            <p>{this.props.data.winner != null ? this.props.data.players[this.props.data.winner].name + ' won!' : ''}</p>
           </div>
           <div className="column">
             <p><strong>Last Move: </strong><br/>

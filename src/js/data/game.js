@@ -156,19 +156,19 @@ class Game {
     // }
     return this;
   }
-  autoClick(playerIndex){
+  autoClickLocation(playerIndex){
     let location = {r: null, c: null};
     location.r = this.randomValue(this.rows);
     location.c = this.randomValue(this.cols);
     if( this.data.players[playerIndex].arena[location.r].cells[location.c].value == 1){
-      location = this.autoClick(playerIndex)
+      location = this.autoClickLocation(playerIndex)
     }
     return location;
   }
 
   isWeaponDestroyed(playerIndex, weaponIndex){
     console.log('player: '+playerIndex, 'weapon: '+weaponIndex)
-    if(weaponIndex != ''){
+    if( weaponIndex !== ''){
       let weapon = this.data.players[playerIndex].weapons[weaponIndex].cells;
       let totalPossibleDamage = weapon.length;
       let damage = 0;
@@ -197,9 +197,9 @@ class Game {
       powers.push({index: playerIndex, power: playerPower});
     })
 
-    if(powers[0] == 0){
+    if(powers[0].power == 0){
       winnerIndex = 1;
-    } else if(powers[1] == 0){
+    } else if(powers[1].power == 0){
       winnerIndex = 0;
     }
     this.data.winner = winnerIndex;
@@ -209,7 +209,7 @@ class Game {
     //pretend like computer is thinking
     // console.log('bot is moving')
     setTimeout(()=>{
-      let cellToClick = this.autoClick(0);
+      let cellToClick = this.autoClickLocation(0);
       this.markCell({ player: this.data.players[0].id, cell: cellToClick }, callback)
 
     },100)

@@ -22,8 +22,20 @@ export default React.createClass({
   },
 
   render() {
+    let classes = ['arena'];
+    if(this.props.winner === null ){
+      if( this.props.turn ){
+        classes.push('turn')
+      }
+    } else {
+      if(this.props.winner !== false ){
+        classes.push('winner')
+      } else {
+        classes.push('lost')
+      }
+    }
     return (
-      <div className={this.props.turn ? 'arena' : 'arena turn'}>
+      <div className={classes.join(' ')}>
         <p>{this.props.player.name}</p>
         {
           this.props.player.arena.map( (row, r) => {
@@ -45,7 +57,7 @@ export default React.createClass({
                           classNames.push('miss');
                         }
                       }
-                      if( this.props.turn || cell.value === 1 ){
+                      if( this.props.winner !== null || this.props.turn || cell.value === 1 ){
                         return (
                             <li
                               className={classNames.join(' ')}
