@@ -6,9 +6,8 @@ import Game from '../data/game.js';
 // data storage
 let _game = new Game();
 
-
 // Facebook style store creation.
-const TodoStore = Object.assign({}, BaseStore, {
+const GameStore = Object.assign({}, BaseStore, {
   // public methods used by Controller-View to operate on data
   getAll() {
     console.log(_game)
@@ -20,6 +19,7 @@ const TodoStore = Object.assign({}, BaseStore, {
   // register store with dispatcher, allowing actions to flow through
   dispatcherIndex: Dispatcher.register(function handleAction(payload) {
     const action = payload.action;
+    const data = action.data;
 
     switch (action.type) {
 
@@ -32,10 +32,12 @@ const TodoStore = Object.assign({}, BaseStore, {
       break;
 
     case Constants.ActionTypes.CELL_SELECTED:
-      _game;
+      _game.markCell(data, () => {
+        GameStore.emitChange();
+      })
       break;
     }
   })
 });
 
-export default TodoStore;
+export default GameStore;

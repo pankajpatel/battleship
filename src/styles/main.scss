@@ -98,27 +98,43 @@ h1 {
     border-collapse: collapse;
     width: 30px;
     height: 30px;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+
+    &.done,
+    &:active{
+      background: rgba(100, 100, 100, 0.2)
+    }
 
     &.weaponized{
       &:before{
-        content: '';
+        content: attr(data-weapon) '';
         display: block;
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        margin: 5px auto;
+        margin: 5px;
         background-color: brown;
+        line-height: 21px;
+        color: white;
+        text-align: center;
+        font-size: 11px;
+        position: absolute;
+
       }
     }
     &.miss,
     &.burst{
+      cursor: default;
       &:after{
+        position: absolute;
         content: '';
         display: block;
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        margin: 5px auto;
+        margin: 5px;
         background-color: rgba(180, 180, 180, 0.5);
       }
     }

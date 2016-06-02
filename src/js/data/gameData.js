@@ -1,4 +1,8 @@
 var game = {
+  arena:{
+    rows: 10,
+    columns: 10
+  },
   weapons: [
     {
       name: 'Battleship',
@@ -12,12 +16,11 @@ var game = {
   ],
   players: [
     {
+      id: 1,
+      type: 'human',
       name: 'You',
-      arena: Array(10).fill({
-            cells: Array(10).fill({
-              name: null
-            })
-          }),
+      arena: [],
+      weaponsIn: null,
       weapons: [
         {
           name: 'Battleship',
@@ -34,12 +37,10 @@ var game = {
         }
       ]
     }, {
+      id: 2,
+      type: 'bot',
       name: 'Computer',
-      arena: Array(10).fill({
-            cells: Array(10).fill({
-              name: null
-            })
-          }),
+      arena: [],
       weapons: [
         {
           name: 'Battleship',

@@ -1,4 +1,6 @@
 import React from 'react';
+import ActionCreator from '../actions/GameActionCreators';
+
 
 export default React.createClass({
   getDefaultProps() {
@@ -12,26 +14,22 @@ export default React.createClass({
         }
       };
   },
-  isWeaponized(r, c){
-    if( this.weapons == null ){
-      let w = [];
-      this.props.player.weapons.map( weapon => {
-        w = w.concat(weapon.cells);
-      })
-      this.weapons = w
-    }
-    let found = this.weapons.filter( weapon => {
-      return r == weapon.r && c == weapon.c;
-    });
-    // console.log(this.weapons, found)
-    return !!found.length;
+
+  handleClick(pId, cell, e){
+    console.log(pId, cell, e.target)
+    ActionCreator.markCell({
+        player: pId,
+        cell
+      });
   },
+
+
   componentWillMount: function(){
       this.weapons = null;
   },
+
   render() {
-    console.log(this.isWeaponized(0, 0));
-    console.log(this.props.player)
+    console.log(this.props)
     return (
       <div className="arena">
         <p>{this.props.player.name}</p>
@@ -41,12 +39,23 @@ export default React.createClass({
                 <ul className="row" key={r}>
                   {
                     row.cells.map( (cell, c) => {
-                      let classNames = ['cell']
-                      if( this.isWeaponized(r, c) ){
+
+                      let classNames = ['cell'];
+
+                      if( this.props.player.name == 'You' && cell.isWeaponized ){
                         classNames.push( 'weaponized' );
                       }
+
+                      if(cell.value === 1){
+                        classNames.push('done');
+                        // classNames.push('miss');
+                      }
                       return (
-                          <li className={classNames.join(' ')} key={c}></li>
+                          <li
+                            className={classNames.join(' ')}
+                            ref={r+','+c} key={c}
+                            data-weapon={cell.weapon}
+                            onClick={this.handleClick.bind(this, this.props.player.id, {r, c})} ></li>
                         )
                     })
                   }

@@ -6,6 +6,7 @@ export default React.createClass({
   propTypes: {
     data: PropTypes.any.isRequired
   },
+
   render() {
     return (
       <div className="container">
@@ -16,7 +17,7 @@ export default React.createClass({
             this.props.data.players.map( (player, i) => {
               return (
                   <div className="column" key={i}>
-                    <Arena player={player}/>
+                    <Arena player={player} ref={'player'+player.id} />
                   </div>
                 )
             })

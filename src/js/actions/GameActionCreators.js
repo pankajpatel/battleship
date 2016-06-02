@@ -4,19 +4,19 @@ import Constants from '../Constants';
 /* eslint-disable no-console */
 
 export default {
-  moved(data){
+  move(data){
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.MOVED,
       data
     })
   },
-  rotated(data){
+  rotate(data){
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.ROTATED,
       data
     })
   },
-  cell_selected(data){
+  markCell(data){
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CELL_SELECTED,
       data
