@@ -1,0 +1,36 @@
+@import "./normalize.css";
+
+$primary-color: green;
+
+h1 {
+  color: $primary-color;
+}
+//############ Clearfix #### Start
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+  }
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+//############ Clearfix #### End
+.arena{
+  padding: 20px;
+}
+.row{
+  margin: 0;
+  padding: 0;
+  display: table-row;
+  list-style: none;
+
+  .cell{
+    border: 1px solid #ccc;
+    display: table-cell;
+    border-collapse: collapse;
+    width: 30px;
+    height: 30px;
+  }
+}
