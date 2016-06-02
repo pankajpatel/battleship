@@ -1,7 +1,6 @@
 import React from 'react';
 import ActionCreator from '../actions/GameActionCreators';
 
-
 export default React.createClass({
   getDefaultProps() {
       return {
@@ -16,22 +15,16 @@ export default React.createClass({
   },
 
   handleClick(pId, cell, e){
-    console.log(pId, cell, e.target)
     ActionCreator.markCell({
         player: pId,
         cell
       });
   },
 
-
-  componentWillMount: function(){
-      this.weapons = null;
-  },
-
   render() {
     console.log(this.props)
     return (
-      <div className="arena">
+      <div className={this.props.turn ? 'arena' : 'arena turn'}>
         <p>{this.props.player.name}</p>
         {
           this.props.player.arena.map( (row, r) => {
@@ -45,18 +38,27 @@ export default React.createClass({
                       if( this.props.player.name == 'You' && cell.isWeaponized ){
                         classNames.push( 'weaponized' );
                       }
-
                       if(cell.value === 1){
                         classNames.push('done');
                         // classNames.push('miss');
                       }
-                      return (
-                          <li
-                            className={classNames.join(' ')}
-                            ref={r+','+c} key={c}
-                            data-weapon={cell.weapon}
-                            onClick={this.handleClick.bind(this, this.props.player.id, {r, c})} ></li>
-                        )
+                      if( this.props.turn ){
+                        return (
+                            <li
+                              className={classNames.join(' ')}
+                              ref={r+','+c} key={c}
+                              data-weapon={cell.weapon} ></li>
+                          )
+                      } else {
+                        classNames.push( 'clickable' );
+                        return (
+                            <li
+                              className={classNames.join(' ')}
+                              ref={r+','+c} key={c}
+                              data-weapon={cell.weapon}
+                              onClick={this.handleClick.bind(this, this.props.player.id, {r, c})} ></li>
+                          )
+                      }
                     })
                   }
                 </ul>

@@ -24,15 +24,23 @@ const GameStore = Object.assign({}, BaseStore, {
     switch (action.type) {
 
     case Constants.ActionTypes.MOVED:
+      //@todo
       _game;
       break;
 
     case Constants.ActionTypes.ROTATED:
+      //@todo
       _game;
       break;
 
     case Constants.ActionTypes.CELL_SELECTED:
       _game.markCell(data, () => {
+        GameStore.emitChange();
+      })
+      break;
+
+    case Constants.ActionTypes.BOT_MOVED:
+      _game.makeComputerMove(() => {
         GameStore.emitChange();
       })
       break;

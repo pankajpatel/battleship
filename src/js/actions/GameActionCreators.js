@@ -21,5 +21,10 @@ export default {
       type: Constants.ActionTypes.CELL_SELECTED,
       data
     })
+  },
+  makeComputerMove(){
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.BOT_MOVED
+    })
   }
 };

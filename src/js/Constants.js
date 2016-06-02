@@ -7,7 +7,8 @@ export default {
   ActionTypes: keyMirror({
     MOVED: null,
     ROTATED: null,
-    CELL_SELECTED: null
+    CELL_SELECTED: null,
+    BOT_MOVED: null
   }),
 
   ActionSources: keyMirror({
