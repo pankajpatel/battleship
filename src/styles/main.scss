@@ -1,6 +1,11 @@
 @import "./normalize.css";
 
 $primary-color: green;
+$breakpoint: 650px;
+$gutter: 10px;
+$container-width: 960px;
+
+
 
 h1 {
   color: $primary-color;
@@ -17,6 +22,67 @@ h1 {
 * html .clearfix             { zoom: 1; } /* IE6 */
 *:first-child+html .clearfix { zoom: 1; } /* IE7 */
 //############ Clearfix #### End
+.container{
+  width: $container-width;
+  margin: 0 auto;
+  display: block;
+  box-sizing: border-box;
+  padding-left: $gutter;
+  padding-right: $gutter;
+  position: relative;
+}
+.column{
+  box-sizing: border-box;
+  float: left;
+  position: relative;
+}
+.two-columns{
+  .column{
+    width: 50%;
+  }
+}
+.three-columns{
+  .column{
+    width: 33.33%;
+  }
+}
+.four-columns{
+  .column{
+    width: 25%;
+  }
+}
+.no-gutter{
+  padding-left: 0;
+  padding-right: 0;
+}
+.no-left-gutter{
+  padding-left: 0;
+}
+.no-right-gutter{
+  padding-right: 0;
+}
+
+@media screen and (max-width: $container-width ){
+  .container{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: $breakpoint){
+  .column{
+    display: block;
+    float: none;
+  }
+  .two-columns,
+  .three-columns,
+  .four-columns,
+  .five-columns{
+    .column{
+      width: 100%;
+    }
+  }
+}
+//######################
 .arena{
   padding: 20px;
 }
@@ -32,5 +98,29 @@ h1 {
     border-collapse: collapse;
     width: 30px;
     height: 30px;
+
+    &.weaponized{
+      &:before{
+        content: '';
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin: 5px auto;
+        background-color: brown;
+      }
+    }
+    &.miss,
+    &.burst{
+      &:after{
+        content: '';
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin: 5px auto;
+        background-color: rgba(180, 180, 180, 0.5);
+      }
+    }
   }
 }

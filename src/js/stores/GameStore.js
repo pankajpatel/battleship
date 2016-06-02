@@ -1,18 +1,19 @@
 import Dispatcher from '../Dispatcher';
 import Constants from '../Constants';
 import BaseStore from './BaseStore';
-import gameData from '../data/game.js';
+import Game from '../data/game.js';
 
 // data storage
-let _game = gameData;
+let _game = new Game();
 
 
 // Facebook style store creation.
 const TodoStore = Object.assign({}, BaseStore, {
   // public methods used by Controller-View to operate on data
   getAll() {
+    console.log(_game)
     return {
-      game: _game
+      game: _game.getState()
     };
   },
 
